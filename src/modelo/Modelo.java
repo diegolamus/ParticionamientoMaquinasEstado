@@ -52,8 +52,47 @@ public class Modelo{
 		return respuesta;
 	}
 	
-	
-	
+	/**
+	 * Este metodo verifica que la particion existe en la particion anterior.
+	 * @param maquina Maquina de Meally
+	 * @param a 
+	 * @param b 
+	 * @return true si la particion esta dentro de la particion anterior.
+	 */
+	public boolean verificarParticion (String [][] maquina, String a, String b, String [] particion) {
+		ArrayList<String> fila1 = buscarValoresMaquina(a, maquina);
+		ArrayList<String> fila2 = buscarValoresMaquina(b, maquina);
+		if ( (fila1.size()>0) && (fila2.size()>0) ) {
+			for (int i = 0; i < fila1.size(); i++) {
+				
+			}
+		}
+		
+		
+		
+		return true;
+	}
 	
 
+	/**
+	 * Busca el valor en una maquina. Devuelve un arraylist con todos los estados de la maquina
+	 * @param a
+	 * @param maquina
+	 * @return
+	 */
+	public ArrayList<String> buscarValoresMaquina (String a, String [][] maquina) {
+		ArrayList<String> respuesta = new ArrayList<String>();
+		for (int i = 1; i < maquina.length; i++) {
+			
+			if ( maquina[i][0].equals(a) ) {
+					for (int j = 1; j < maquina[0].length-1; j++) {
+						respuesta.add(maquina[i][j]);
+					}
+				}
+		
+		}
+		return respuesta;
+	}
+	
+	
 }
