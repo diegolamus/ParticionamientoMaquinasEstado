@@ -12,7 +12,6 @@ public class Modelo{
 	 * @return Una maquina de Meally equivalente.
 	 */
 	public static String [][] meallyReduccion (String [][] maquina) {
-		String [][] respuesta = new String [maquina.length][maquina[0].length];
 		
 		//eliminamos los estados que no estan conectados
 		for (int i = 1; i < maquina.length-1; i++) {
@@ -30,21 +29,30 @@ public class Modelo{
 		}
 		
 		//en esta parte se hara la primera paricion de dos elementos
-		String [] primerParticion =  new String [2];
-		for (int i = 1; i < respuesta.length; i++) {
+		ArrayList<String> primerParticion =  new ArrayList<String>(2);
+		for (int i = 1; i < maquina.length; i++) {
 			//en el caso que la salida sea cero
-			if (respuesta[maquina.length-1][i].equals("0")) {
-				primerParticion [0] = respuesta[maquina.length-1][i]+",";
+			if (maquina[maquina.length-1][i].equals("0")) {
+				primerParticion.add(0,maquina[maquina.length-1][i]+",");
 			}
 			//cuando la salida es 1
 			else {
-				primerParticion [1] = respuesta[maquina.length-1][i]+",";
+				primerParticion.add(1,maquina[maquina.length-1][i]+",");
 			}	
 		}
 		//ahora vamos a hacer los siguientes pariticonamientos a partir de los dos pariticionamientos creados anteriormente.
 		
 		
+		//hacemos la busqueda de cada pareja de elementos para verificar si pertenecen a cada particion
 		
+		
+		//renombramiento
+		
+		
+		// buscamos ver las nuevas relaciones del renombramiento minimo
+		
+		
+		// retorno la maquina minima equivalente
 		
 		
 		
@@ -64,7 +72,7 @@ public class Modelo{
 		ArrayList<String> fila2 = buscarValoresMaquina(b, maquina);
 		if ( (fila1.size()>0) && (fila2.size()>0) ) {
 			for (int i = 0; i < fila1.size(); i++) {
-				
+				// buscamos si cada pareja pertenece al particionamiento anterior
 			}
 		}
 		
