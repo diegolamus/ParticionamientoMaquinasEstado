@@ -31,7 +31,7 @@ public class GenerarTabla extends JFrame {
 		this.add(estados);
 		
 		// Agregar campo de tamanio vocabulario
-		JLabel voc = new JLabel("Puerto:");
+		JLabel voc = new JLabel("Largo Alfabeto:");
 		voc.setBounds(10, 40, 150, 30);
 		this.add(voc);
 		largo_vocabulario= new JTextField();
