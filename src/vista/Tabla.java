@@ -10,6 +10,8 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import modelo.AlgoritmoParticionamiento;
+
 @SuppressWarnings("serial")
 public class Tabla extends JFrame {
 
@@ -20,6 +22,7 @@ public class Tabla extends JFrame {
 	private String[] listaEstados;
 	private ArrayList<JComboBox<String>> combosTransiciones;
 	private ArrayList<JComboBox<String>> combosSalidas;
+	private AlgoritmoParticionamiento modelo;
 	
 	
 	public Tabla(int estados, int alfabeto) {
@@ -87,7 +90,8 @@ public class Tabla extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				recoger_matriz();
-				String[][] resultados = matriz;
+				modelo = new AlgoritmoParticionamiento(matriz);
+				String[][] resultados = modelo.getMaquina();
 				// TODO Recoger combos, coonsumir metodo Eilen, generar nuevo frame
 				MostrarResultados mos = new MostrarResultados(resultados);
 				mos.setVisible(true);

@@ -5,57 +5,54 @@ import java.util.ArrayList;
 import javax.smartcardio.ResponseAPDU;
 
 /**
- * Esta clase aplica el particionamiento a la maquina moore
- * si es maquina mealy, se debe convertir a moore.
+ * Esta clase aplica el particionamiento a la maquina moore si es maquina mealy,
+ * se debe convertir a moore.
  */
 public class AlgoritmoParticionamiento {
-	
+
 	private String[][] maquina;
 	private ArrayList<ArrayList<String>> particionFinal;
-	
-	
+
 	public AlgoritmoParticionamiento(String[][] maquina) {
 		this.maquina = maquina;
 		particionFinal = new ArrayList<ArrayList<String>>();
+		generacionAutomataEquivalente();
 	}
-	
-	
-	
-	
-
-
 
 	/**
-	 * Convierte el automata de mealy a moore para que pueda ser procesado por el algoritmo de particionamiento
-	 * Si el automata esta en mealy, empieza aqui, en moore empieza en generacionAutomataEquivalente
+	 * Convierte el automata de mealy a moore para que pueda ser procesado por
+	 * el algoritmo de particionamiento Si el automata esta en mealy, empieza
+	 * aqui, en moore empieza en generacionAutomataEquivalente
+	 * 
 	 * @return
 	 */
-	public String[][] convertirAutomataMealy(String[][] automataMealy){
-	
-		//TODO
+	public String[][] convertirAutomataMealy(String[][] automataMealy) {
+
+		// TODO
 		// convertir automata
-		
+
 		maquina = automataMealy;
-		String[][] respuesta = generacionAutomataEquivalente();
-		
+		String[][] respuesta = null;
+
 		return respuesta;
 	}
-	
-	
-	
+
 	/**
 	 * Genera el automata equivalente siguiendo el algoritmo del enunciado
 	 * 
 	 * @return
 	 */
-	public String[][] generacionAutomataEquivalente() {
+	public void generacionAutomataEquivalente() {
 
 		// ---------------------PASO 1------------------------------------------
 
 		// 1. elimina los estados que no esten conexos a la maquina
 		automataConexo();
 
-		// -------------------PASO 2----------------------------------------------
+		limpiarNulls();
+
+		// -------------------PASO
+		// 2----------------------------------------------
 
 		// 2. pariticion inicial
 		ArrayList<ArrayList<String>> pK = particionamientoPrimerNivel();
@@ -65,9 +62,12 @@ public class AlgoritmoParticionamiento {
 
 		// 4. verifica si pk es igual a pkMas1
 		boolean terminoParticionamiento = verificarParticionamientosIguales(pK, PKMas1);
+		if (terminoParticionamiento) {
+			particionFinal = PKMas1;
+		}
 
 		// 5. itera hasta encontrar un pk = pk +1
-		for (int i = 0; i < maquina[0].length && !terminoParticionamiento; i++) {
+		for (int i = 0; i < maquina[0].length && terminoParticionamiento == false; i++) {
 			ArrayList<ArrayList<String>> PK = PKMas1;
 			PKMas1 = particionamientoKmas1(PK);
 
@@ -77,10 +77,12 @@ public class AlgoritmoParticionamiento {
 			}
 		}
 
-		// -----------------------PASO 3---------------------------------------------
-		String[][] automataEquivalente = nuevoAutomataEquivalente();
+		// -----------------------PASO
+		// 3---------------------------------------------
+		maquina = nuevoAutomataEquivalente();
 
-		return automataEquivalente;
+		convertirmatrizNumericaAsciiAChar();
+
 	}
 
 	/**
@@ -93,8 +95,9 @@ public class AlgoritmoParticionamiento {
 	public String[][] nuevoAutomataEquivalente() {
 
 		String[][] automataequivalente = new String[particionFinal.size() + 1][4];
-		automataequivalente[0][1] = "0";
-		automataequivalente[0][2] = "1";
+		automataequivalente[0][1] = "a";
+		automataequivalente[0][2] = "b";
+		automataequivalente[0][3] = "Salida";
 
 		int letraEstado = 65;
 
@@ -102,13 +105,13 @@ public class AlgoritmoParticionamiento {
 			automataequivalente[i + 1][0] = (char) letraEstado + "";
 
 			// determina el estado al que llega con la entrada 0:
-			int posicion = Integer.parseInt(particionFinal.get(i).get(0));
+			int posicion = (int) particionFinal.get(i).get(0).charAt(0);
 
 			// PARA ENTRADA 0-----
 
 			// toma el estado (letra) a la que llega el estado en 0, a partir de
 			// la posicion anterior.
-			String letra0 = maquina[posicion + 1][1];
+			String letra0 = maquina[posicion + 1 - 65][1];
 
 			// busca el estado al que llega con 0
 			String estado0 = estadoLlegada(letra0);
@@ -119,7 +122,7 @@ public class AlgoritmoParticionamiento {
 
 			// toma el estado (letra) a la que llega el estado en 0, a partir de
 			// la posicion anterior.
-			String letra1 = maquina[posicion + 1][2];
+			String letra1 = maquina[posicion + 1 - 65][2];
 
 			// busca el estado al que llega con 0
 			String estado1 = estadoLlegada(letra1);
@@ -127,13 +130,12 @@ public class AlgoritmoParticionamiento {
 			automataequivalente[i + 1][2] = estado1;
 
 			// establece el numero de salida para ese estado
-			automataequivalente[i + 1][3] = maquina[posicion + 1][3];
+			automataequivalente[i + 1][3] = maquina[posicion + 1 - 65][3];
 		}
 
 		return automataequivalente;
 	}
 
-	
 	public String estadoLlegada(String estadoOriginal) {
 		String letraLlegada = "";
 
@@ -198,7 +200,9 @@ public class AlgoritmoParticionamiento {
 	public ArrayList<ArrayList<String>> particionamientoPrimerNivel() {
 		ArrayList<ArrayList<String>> particionamientoN1 = new ArrayList<ArrayList<String>>();
 
-		for (int i = 0; i < maquina[0].length - 1; i++) {
+		particionamientoN1.add(new ArrayList<String>());
+		particionamientoN1.add(new ArrayList<String>());
+		for (int i = 1; i < maquina[0].length - 1; i++) {
 
 			// verifica que no sea nulo por si se ha eliminado algun estado que
 			// no estuviera conexo en la maquina original
@@ -242,7 +246,11 @@ public class AlgoritmoParticionamiento {
 				// mira la posicion en la que debe ir la clave y la agrega segun
 				// los bloques semejantes
 				int posicion = posicionClave(claves, claveDeBloque);
+
 				claves.add(posicion, claveDeBloque);
+
+				// TODO
+				pKMas1.add(new ArrayList<String>());
 
 				// añade segun sus bloques, la letra que corresponda.
 				pKMas1.get(posicion).add(letra);
@@ -294,7 +302,6 @@ public class AlgoritmoParticionamiento {
 		return respuesta;
 	}
 
-	
 	/**
 	 * Verifica que el particionamiento anterior sea igual al actual para parar.
 	 * 
@@ -304,23 +311,21 @@ public class AlgoritmoParticionamiento {
 	 *            particionamiento actual
 	 * @return verdadero si son iguales
 	 */
-	public boolean verificarParticionamientosIguales(ArrayList<ArrayList<String>> pK, ArrayList<ArrayList<String>> pKMas1) {
+	public boolean verificarParticionamientosIguales(ArrayList<ArrayList<String>> pK,
+			ArrayList<ArrayList<String>> pKMas1) {
 
 		boolean respuesta = true;
 
-		if (pK.size() == pKMas1.size()) {
-
-			for (int i = 0; i < pK.size(); i++) {
-				for (int j = 0; j < pK.get(i).size(); j++) {
-					if (pK.get(i).size() == pKMas1.get(i).size()) {
-						if (!pK.get(i).get(j).equals(pKMas1.get(i).get(j))) {
-							respuesta = false;
-						}
-					} else if (pK.get(i).size() != pKMas1.get(i).size()) {
+		for (int i = 0; i < pK.size(); i++) {
+			for (int j = 0; j < pK.get(i).size(); j++) {
+				if (pK.get(i).size() == pKMas1.get(i).size()) {
+					if (!pK.get(i).get(j).equals(pKMas1.get(i).get(j))) {
 						respuesta = false;
 					}
-
+				} else if (pK.get(i).size() != pKMas1.get(i).size()) {
+					respuesta = false;
 				}
+
 			}
 		}
 
@@ -360,4 +365,46 @@ public class AlgoritmoParticionamiento {
 
 		return respuesta;
 	}
+
+	public void convertirmatrizNumericaAsciiAChar() {
+		for (int i = 1; i < maquina.length; i++) {
+			for (int j = 1; j < maquina[0].length - 1; j++) {
+				// maquina[i][j] = (char)(Integer.parseInt(maquina[i][j]))+"";
+			}
+		}
+	}
+
+	public void limpiarNulls() {
+
+		int numNulos = 0;
+		for (int i = 1; i < maquina[0].length; i++) {
+			if (maquina[i][0] == null) {
+				numNulos++;
+			}
+		}
+
+		String[][] matrizAuxiliar = new String[maquina[0].length - numNulos][maquina.length];
+		for (int i = 0, a = 0; i < maquina.length; i++) {
+
+			for (int j = 0; j < maquina[0].length; j++) {
+				if (maquina[i][1] != null) {
+					matrizAuxiliar[a][j] = maquina[i][j];
+				}
+			}
+			if (maquina[i][1] != null) {
+				a++;
+			}
+		}
+
+		maquina = matrizAuxiliar;
+	}
+
+	public String[][] getMaquina() {
+		return maquina;
+	}
+
+	public void setMaquina(String[][] maquina) {
+		this.maquina = maquina;
+	}
+
 }
