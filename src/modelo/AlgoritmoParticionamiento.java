@@ -18,6 +18,10 @@ public class AlgoritmoParticionamiento {
 		this.maquina = maquina;
 		particionFinal = new ArrayList<ArrayList<String>>();
 	}
+	
+	
+	
+	
 
 
 
