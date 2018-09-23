@@ -13,6 +13,10 @@ import javax.swing.JLabel;
 import modelo.AlgoritmoParticionamiento;
 
 
+
+
+
+
 @SuppressWarnings("serial")
 public class TablaMealy extends JFrame {
 	
