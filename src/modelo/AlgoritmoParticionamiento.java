@@ -80,7 +80,6 @@ public class AlgoritmoParticionamiento {
 		// -----------------------PASO
 		// 3---------------------------------------------
 		maquina = nuevoAutomataEquivalente();
-
 		convertirmatrizNumericaAsciiAChar();
 
 	}
@@ -132,7 +131,6 @@ public class AlgoritmoParticionamiento {
 			// establece el numero de salida para ese estado
 			automataequivalente[i + 1][3] = maquina[posicion + 1 - 65][3];
 		}
-
 		return automataequivalente;
 	}
 
@@ -377,26 +375,23 @@ public class AlgoritmoParticionamiento {
 	public void limpiarNulls() {
 
 		int numNulos = 0;
-		for (int i = 1; i < maquina[0].length; i++) {
+		for (int i = 1; i < maquina.length; i++) {
 			if (maquina[i][0] == null) {
 				numNulos++;
 			}
 		}
 
-		String[][] matrizAuxiliar = new String[maquina[0].length - numNulos][maquina.length];
-		for (int i = 0, a = 0; i < maquina.length; i++) {
-
+		if (numNulos!=0) {
+			String[][] matrizAuxiliar = new String[maquina.length - numNulos][maquina[0].length];
+		for (int i = 0, a = 0; i < maquina.length && maquina[i][0]!=null; i++) {
 			for (int j = 0; j < maquina[0].length; j++) {
-				if (maquina[i][1] != null) {
 					matrizAuxiliar[a][j] = maquina[i][j];
-				}
 			}
-			if (maquina[i][1] != null) {
-				a++;
-			}
+			a++;
 		}
-
 		maquina = matrizAuxiliar;
+		}
+		
 	}
 
 	public String[][] getMaquina() {
