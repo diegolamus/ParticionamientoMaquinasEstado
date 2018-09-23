@@ -13,10 +13,6 @@ import javax.swing.JLabel;
 import modelo.AlgoritmoParticionamiento;
 
 
-
-
-
-
 @SuppressWarnings("serial")
 public class TablaMealy extends JFrame {
 	
@@ -84,23 +80,30 @@ public class TablaMealy extends JFrame {
 						
 				}
 			}
+			
+			//agregar combo boxes salida de cada nodo
 			for (int j = 0; j<estados;j++) {
-				JComboBox<String> combito = new JComboBox<>();
-				combito.addItem("1");
-				combito.addItem("0");
-				combosSalidas.add(combito);
-				combito.setBounds(SEPARACION_FILAS*alfabeto,60+ SEPARACION_COLUMNAS*j,40,40);
-				this.add(combito);
+				for (int i = 0; i < alfabeto; i++) {
+					JComboBox<String> combito = new JComboBox<>();
+				    combito.addItem("1");
+				    combito.addItem("0");
+				    combosSalidas.add(combito);
+				    combito.setBounds(100+SEPARACION_FILAS*i,60+ SEPARACION_COLUMNAS*j,40,40);
+				    this.add(combito);
+				}
+				
 			}
 			//TODO
-			for (int j = 0; j<estados;j++) {
-				JComboBox<String> combito = new JComboBox<>();
-				combito.addItem("1");
-				combito.addItem("0");
-				combosSalidas1.add(combito);
-				combito.setBounds(10+SEPARACION_FILASNUM*alfabeto,60+ SEPARACION_COLUMNAS*j,40,40);
-				this.add(combito);
-			}
+//			for (int j = 0; j<estados;j++) {
+//				JComboBox<String> combito = new JComboBox<>();
+//				combito.addItem("1");
+//				combito.addItem("0");
+//				combosSalidas1.add(combito);
+//				combito.setBounds(10+SEPARACION_FILASNUM*alfabeto,60+ SEPARACION_COLUMNAS*j,40,40);
+//				this.add(combito);
+//				
+//				
+//			}
 			
 			// Agregar boton para generar resultados
 			JButton buton = new JButton("Generar resultados");
