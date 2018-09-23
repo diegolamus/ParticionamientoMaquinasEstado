@@ -25,7 +25,6 @@ public class TablaMealy extends JFrame {
 		private String[] listaEstados;
 		private ArrayList<JComboBox<String>> combosTransiciones;
 		private ArrayList<JComboBox<String>> combosSalidas;
-		private ArrayList<JComboBox<String>> combosSalidas1;
 		private AlgoritmoParticionamiento modelo;
 		
 		
@@ -69,7 +68,6 @@ public class TablaMealy extends JFrame {
 			// Agregar combo boxes transiciones
 			combosTransiciones = new ArrayList<>();
 			combosSalidas = new ArrayList<>();
-			combosSalidas1 = new ArrayList<>();
 			
 			for (int i =0; i<estados;i++) {
 				for (int j = 0; j<alfabeto;j++) {
@@ -124,12 +122,9 @@ public class TablaMealy extends JFrame {
 					for (int i =0; i<estados;i++) {
 						for (int j = 0; j<alfabeto;j++) {
 								String value = combosTransiciones.get((i*alfabeto)+j).getSelectedItem().toString();
-								matriz[i+1][j+1] = value;
+								String valueSalida = combosSalidas.get((i*alfabeto)+j).getSelectedItem().toString();
+								matriz[i+1][j+1] = value+","+valueSalida;
 						}
-					}
-					for (int j = 0; j<estados;j++) {
-						String value = combosSalidas.get(j).getSelectedItem().toString();
-						matriz[j+1][alfabeto+1] = value;
 					}
 						
 				}
