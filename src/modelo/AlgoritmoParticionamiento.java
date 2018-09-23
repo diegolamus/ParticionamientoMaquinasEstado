@@ -381,7 +381,7 @@ public class AlgoritmoParticionamiento {
 			}
 		}
 
-		if (numNulos!=0) {
+		if (numNulos>0) {
 			String[][] matrizAuxiliar = new String[maquina.length - numNulos][maquina[0].length];
 		for (int i = 0, a = 0; i < maquina.length && maquina[i][0]!=null; i++) {
 			for (int j = 0; j < maquina[0].length; j++) {
