@@ -10,9 +10,20 @@ import javax.smartcardio.ResponseAPDU;
  */
 public class AlgoritmoParticionamiento {
 
+	/**
+	 * maquina original que sera modificada por su automata equivalente
+	 */
 	private String[][] maquina;
+	
+	/**
+	 * particion final contiene todos los bloques para ser renombrados y generar el automata equivalente
+	 */
 	private ArrayList<ArrayList<String>> particionFinal;
 
+	/**
+	 * Descripcion: Constructor de la clase
+	 * @param maquina
+	 */
 	public AlgoritmoParticionamiento(String[][] maquina) {
 		this.maquina = maquina;
 		particionFinal = new ArrayList<ArrayList<String>>();
@@ -24,23 +35,18 @@ public class AlgoritmoParticionamiento {
 	 * el algoritmo de particionamiento Si el automata esta en mealy, empieza
 	 * aqui, en moore empieza en generacionAutomataEquivalente
 	 * 
-	 * @return
 	 */
-	public String[][] convertirAutomataMealy(String[][] automataMealy) {
+	public void convertirAutomataMealy() {
 
-		// TODO
-		// convertir automata
+		// TODO - convertir automata
 
+		String[][] automataMealy = new String[maquina.length][maquina[0].length];
 		maquina = automataMealy;
-		String[][] respuesta = null;
-
-		return respuesta;
 	}
 
 	/**
-	 * Genera el automata equivalente siguiendo el algoritmo del enunciado
+	 * Descripcion: Genera el automata equivalente siguiendo el algoritmo del enunciado
 	 * 
-	 * @return
 	 */
 	public void generacionAutomataEquivalente() {
 
@@ -134,6 +140,11 @@ public class AlgoritmoParticionamiento {
 		return automataequivalente;
 	}
 
+	/**
+	 * Busca el bloque al que pertenece un estado para la particion final
+	 * @param estadoOriginal
+	 * @return cadena o clave de un bloque de la particion
+	 */
 	public String estadoLlegada(String estadoOriginal) {
 		String letraLlegada = "";
 
@@ -364,6 +375,9 @@ public class AlgoritmoParticionamiento {
 		return respuesta;
 	}
 
+	/**
+	 * Descripcion: Convierte cada posicion de estados de llegada, para la maquina respuesta, en letras
+	 */
 	public void convertirmatrizNumericaAsciiAChar() {
 		for (int i = 1; i < maquina.length; i++) {
 			for (int j = 1; j < maquina[0].length - 1; j++) {
@@ -372,6 +386,10 @@ public class AlgoritmoParticionamiento {
 		}
 	}
 
+	/**
+	 * Descripcion: Despues de eliminar los estados que no eran conexos, quedaron filas en null;
+	 * por lo tanto este metodo elimina esas filas en null
+	 */
 	public void limpiarNulls() {
 
 		int numNulos = 0;

@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import modelo.AlgoritmoParticionamiento;
 
@@ -29,6 +31,9 @@ public class TablaMealy extends JFrame {
 		
 		
 		public TablaMealy(int estados, int alfabeto) {
+			
+			
+			
 			matriz = new String[estados+1][alfabeto+2];
 			listaEstados = new String[estados];
 			this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -36,6 +41,7 @@ public class TablaMealy extends JFrame {
 			this.setResizable(false);
 			this.setPreferredSize(new Dimension(160 + SEPARACION_COLUMNAS*alfabeto, 150+SEPARACION_FILAS*estados));
 			
+			 
 			// Agregar las transiciones
 			for ( int i = 0; i<= alfabeto; i++) {
 				if(i==alfabeto) {
@@ -91,18 +97,6 @@ public class TablaMealy extends JFrame {
 				}
 				
 			}
-			//TODO
-//			for (int j = 0; j<estados;j++) {
-//				JComboBox<String> combito = new JComboBox<>();
-//				combito.addItem("1");
-//				combito.addItem("0");
-//				combosSalidas1.add(combito);
-//				combito.setBounds(10+SEPARACION_FILASNUM*alfabeto,60+ SEPARACION_COLUMNAS*j,40,40);
-//				this.add(combito);
-//				
-//				
-//			}
-			
 			// Agregar boton para generar resultados
 			JButton buton = new JButton("Generar resultados");
 			buton.setBounds(-75+(160 + SEPARACION_COLUMNAS*alfabeto)/2, 80+SEPARACION_FILAS*estados, 150, 30);
@@ -130,8 +124,12 @@ public class TablaMealy extends JFrame {
 				}
 				
 			});
+			
+			
+			
 			this.add(buton);
 			this.pack();	
+			
 		}
 	}
 
